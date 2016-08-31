@@ -42,8 +42,8 @@ function fem_50()
    FreeNodes = setdiff( 1:n, BoundNodes );
    u[FreeNodes] = A[FreeNodes,FreeNodes] \ b[FreeNodes];
 
-   triplot(coord[:,1], coord[:,2], elem3-1)
-   tricontour(coord[:,1], coord[:,2], elem3-1, u)
+   triplot(coord[:,1], coord[:,2], elem3-1, color=(0.0,0.25,0.15),linewidth=0.2)
+   tricontour(coord[:,1], coord[:,2], elem3-1, u, linewidth=2)
    show()
 end
 
