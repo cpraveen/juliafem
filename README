@@ -1,0 +1,26 @@
+This code is a rewriting of the 50 lines of matlab
+
+http://link.springer.com/article/10.1023/A:1019155918070
+https://www.math.hu-berlin.de/~cc/cc_homepage/download/1999-AJ_CC_FS-50_Lines_of_Matlab.pdf
+
+in julia.
+
+--------------------------------------------------------------------------------
+TODO
+--------------------------------------------------------------------------------
+Complete assembly for quadrilaterals
+Adding plotting solution for quadrilaterals
+
+--------------------------------------------------------------------------------
+How to run example in "square"
+--------------------------------------------------------------------------------
+
+cd square
+
+Generate mesh by running square.m in matlab (julia version not completed)
+matlab> square(20)
+matlab> quit
+
+Run the fem code
+
+julia run.jl
