@@ -15,7 +15,7 @@ Adding plotting solution for quadrilaterals
 How to run example in "square"
 --------------------------------------------------------------------------------
 
-cd square
+bash> cd square
 
 Generate mesh by running square.m in matlab (julia version not completed)
 matlab> square(20)
@@ -23,4 +23,4 @@ matlab> quit
 
 Run the fem code
 
-julia run.jl
+bash> julia run.jl
