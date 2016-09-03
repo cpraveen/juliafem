@@ -10,8 +10,7 @@ https://github.com/cpraveen/fem50
 --------------------------------------------------------------------------------
 TODO
 --------------------------------------------------------------------------------
-Complete assembly for quadrilaterals
-Add plotting solution for quadrilaterals
+Add plotting solution for quadrilaterals. The matlab code uses trisurf which can plot triangles and quadrilaterals. There is no equivalent function I could find in julia.
 
 --------------------------------------------------------------------------------
 How to run example in "square"
