@@ -24,3 +24,14 @@ matlab> quit
 Run the fem code
 
 bash> julia run.jl
+
+--------------------------------------------------------------------------------
+Constructing sparse matrix
+--------------------------------------------------------------------------------
+The simplest way to initialize an empty nxn sparse matrix is
+
+julia> A = spzeros(n,n)
+
+This makes use of 64 byte integers and floats. For small problem sizes, 32 byte integers are enough for indexing, in which case you can do
+
+julia> A = sparse(Int32[], Int32[], Float64[], n, n)
