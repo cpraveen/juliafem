@@ -18,7 +18,7 @@ function fem_50()
    n = size(coord,1); nt = size(elem3,1); nq = size(elem4,1);
    println("Number of vertices, triangles, quads = $n, $nt, $nq")
 
-   A = sparse(Int64[],Int64[],Float64[],n,n);
+   A = spzeros(n,n);
    b = zeros(n);
    for j in 1:nt
       v = vec(elem3[j,:]);
