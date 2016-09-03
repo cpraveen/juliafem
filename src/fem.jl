@@ -9,6 +9,18 @@ function stima3(vertices)
    return det([ones(1,d+1); vertices']) * G * G' / prod(1:d);
 end
 
+function stima4(vertices)
+  D_Phi = [ vertices[2,:] - vertices[1,:]; vertices[4,:] - vertices[1,:] ]'
+  B = inv( D_Phi' * D_Phi )
+  C1 =  [ [ 2, -2] [-2,  2] ] * B[1,1]
+      + [ [ 3,  0] [ 0, -3] ] * B[1,2]
+      + [ [ 2,  1] [ 1,  2] ] * B[2,2]
+  C2 =  [ [-1,  1] [ 1, -1] ] * B[1,1]
+      + [ [-3,  0] [ 0,  3] ] * B[1,2]
+      + [ [-1, -2] [-2, -1] ] * B[2,2]
+  return det( D_Phi ) * [ C1 C2; C2 C1 ] / 6
+end
+
 function fem_50()
    coord = readdlm("coordinates.dat");
    elem3 = isfile("elements3.dat") ? round(Int64,readdlm("elements3.dat")) : [];
@@ -20,10 +32,17 @@ function fem_50()
 
    A = spzeros(n,n);
    b = zeros(n);
+
    for j in 1:nt
       v = vec(elem3[j,:]);
       A[v,v] += stima3(coord[v,:]);
       b[v] += det([[1,1,1]'; coord[v,:]']) * f(sum(coord[v,:],1)/3)/6;
+   end
+
+   for j in 1:nq
+      v = vec(elem4[j,:]);
+      A[v,v] += stima4(coord[v,:]);
+      b[v] += det([[1,1,1]'; coord[v[1:3],:]']) * f(sum(coord[v,:],1)/4)/4;
    end
 
    if ~isempty(neumann)
