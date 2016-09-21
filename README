@@ -10,7 +10,7 @@ https://github.com/cpraveen/fem50
 --------------------------------------------------------------------------------
 TODO
 --------------------------------------------------------------------------------
-Add plotting solution for quadrilaterals. The matlab code uses trisurf which can plot triangles and quadrilaterals. There is no equivalent function I could find in julia.
+Add plotting solution for quadrilaterals. The matlab code uses trisurf which can plot triangles and quadrilaterals. There is no equivalent function I could find in PyPlot.
 
 --------------------------------------------------------------------------------
 How to run example in "square"
@@ -36,3 +36,7 @@ julia> A = spzeros(n,n)
 This makes use of 64 byte integers and floats. For small problem sizes, 32 byte integers are enough for indexing, in which case you can do
 
 julia> A = sparse(Int32[], Int32[], Float64[], n, n)
+
+--------------------------------------------------------------------------------
+This was my first attempt at writing a Julia program. Comments, feedback or criticism to improve this code is most welcome. Please email me at My_Github_Username@gmail.com
+--------------------------------------------------------------------------------
