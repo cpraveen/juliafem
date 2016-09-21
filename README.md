@@ -7,40 +7,35 @@ in the julia language. For the matlab version, see
 
 https://github.com/cpraveen/fem50
 
---------------------------------------------------------------------------------
-TODO
---------------------------------------------------------------------------------
+## TODO
 Add plotting solution for quadrilaterals. The matlab code uses trisurf which can plot triangles and quadrilaterals. There is no equivalent function I could find in PyPlot. I use contour plots in the Julia code through the tricontour function from PyPlot. If you run the example in "sample" it plots only triangles and leaves out the quadrilaterals.
 
---------------------------------------------------------------------------------
-How to run example in "square"
---------------------------------------------------------------------------------
-
+## How to run example in "square"
+```
 bash> cd square
-
+```
 Generate mesh by running square.m in matlab (julia version not completed)
+```
 matlab> square(20)
 matlab> quit
-
+```
 Run the fem code
-
+```
 bash> julia run.jl
-
+```
 You should get a solution like this
 
 ![square](square.png)
 
---------------------------------------------------------------------------------
-Constructing sparse matrix
---------------------------------------------------------------------------------
+## Constructing sparse matrix
 The simplest way to initialize an empty nxn sparse matrix is
-
+```
 julia> A = spzeros(n,n)
-
+```
 This makes use of 64 byte integers and floats. For small problem sizes, 32 byte integers are enough for indexing, in which case you can do
-
+```
 julia> A = sparse(Int32[], Int32[], Float64[], n, n)
+```
 
---------------------------------------------------------------------------------
+## Feedback
 This was my first attempt at writing a Julia program. Comments, feedback or criticism to improve this code is most welcome. Please email me at My_Github_Username@gmail.com
---------------------------------------------------------------------------------
