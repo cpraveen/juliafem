@@ -17,7 +17,7 @@ bash> cd square
 ```
 Generate mesh by running square.m in matlab (julia version not completed)
 ```
-matlab> square(20)
+matlab> square(30)
 matlab> quit
 ```
 Run the fem code

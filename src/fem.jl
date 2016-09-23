@@ -21,23 +21,23 @@ function stima4(vertices)
   return det( D_Phi ) * [ C1 C2; C2 C1 ] / 6
 end
 
-function plotsol(coord, elem3, elem4, u)
+function plotsol(coord, elem3, elem4, u, ncont)
    triplot(coord[:,1], coord[:,2], elem3-1, color=(0.0,0.25,0.15),linewidth=0.2)
-   tricontour(coord[:,1], coord[:,2], elem3-1, u, linewidth=2)
+   tricontour(coord[:,1], coord[:,2], elem3-1, u, ncont, linewidth=2)
 
    # For quads, we triangulate and plot
    if size(elem4,1) > 0
       el = elem4[:,[1,2,3]]-1
       triplot(coord[:,1], coord[:,2], el, color=(0.0,0.25,0.15),linewidth=0.2)
-      tricontour(coord[:,1], coord[:,2], el, u, linewidth=2)
+      tricontour(coord[:,1], coord[:,2], el, u, ncont, linewidth=2)
       el = elem4[:,[1,3,4]]-1
       triplot(coord[:,1], coord[:,2], el, color=(0.0,0.25,0.15),linewidth=0.2)
-      tricontour(coord[:,1], coord[:,2], el, u, linewidth=2)
+      tricontour(coord[:,1], coord[:,2], el, u, ncont, linewidth=2)
    end
    show()
 end
 
-function fem_50()
+function fem_50(ncont=10)
    coord = readdlm("coordinates.dat")
    elem3 = isfile("elements3.dat") ? round(Int64,readdlm("elements3.dat")) : []
    elem4 = isfile("elements4.dat") ? round(Int64,readdlm("elements4.dat")) : []
@@ -77,7 +77,7 @@ function fem_50()
    FreeNodes = setdiff( 1:n, BoundNodes )
    u[FreeNodes] = A[FreeNodes,FreeNodes] \ b[FreeNodes]
 
-   plotsol(coord, elem3, elem4, u)
+   plotsol(coord, elem3, elem4, u, ncont)
 end
 
 export fem_50
