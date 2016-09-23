@@ -9,7 +9,7 @@ in the julia language. For the matlab version, see
 https://github.com/cpraveen/fem50
 
 ## TODO
-Add plotting solution for quadrilaterals. The matlab code uses trisurf which can plot triangles and quadrilaterals. There is no equivalent function I could find in PyPlot. I use contour plots in the Julia code through the tricontour function from PyPlot. If you run the example in "sample" it plots only triangles and leaves out the quadrilaterals.
+Add plotting solution for quadrilaterals. The matlab code uses trisurf which can plot triangles and quadrilaterals. There is no equivalent function I could find in PyPlot. I use contour plots in the Julia code through the tricontour function from PyPlot. If you run the example in "sample", it plots quadrilaterals by triangulating them.
 
 ## How to run example in "square"
 ```

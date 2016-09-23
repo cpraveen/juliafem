@@ -10,15 +10,31 @@ function stima3(vertices)
 end
 
 function stima4(vertices)
-  D_Phi = [ vertices[2,:] - vertices[1,:]; vertices[4,:] - vertices[1,:] ]'
-  B = inv( D_Phi' * D_Phi )
-  C1 =  [ [ 2, -2] [-2,  2] ] * B[1,1]
-      + [ [ 3,  0] [ 0, -3] ] * B[1,2]
-      + [ [ 2,  1] [ 1,  2] ] * B[2,2]
-  C2 =  [ [-1,  1] [ 1, -1] ] * B[1,1]
-      + [ [-3,  0] [ 0,  3] ] * B[1,2]
-      + [ [-1, -2] [-2, -1] ] * B[2,2]
+   D_Phi = [ vertices[2,:]-vertices[1,:] vertices[4,:]-vertices[1,:] ]
+   B = inv( D_Phi' * D_Phi )
+   C1 =  [ [ 2, -2] [-2,  2] ] * B[1,1]
+       + [ [ 3,  0] [ 0, -3] ] * B[1,2]
+       + [ [ 2,  1] [ 1,  2] ] * B[2,2]
+   C2 =  [ [-1,  1] [ 1, -1] ] * B[1,1]
+       + [ [-3,  0] [ 0,  3] ] * B[1,2]
+       + [ [-1, -2] [-2, -1] ] * B[2,2]
   return det( D_Phi ) * [ C1 C2; C2 C1 ] / 6
+end
+
+function plotsol(coord, elem3, elem4, u)
+   triplot(coord[:,1], coord[:,2], elem3-1, color=(0.0,0.25,0.15),linewidth=0.2)
+   tricontour(coord[:,1], coord[:,2], elem3-1, u, linewidth=2)
+
+   # For quads, we triangulate and plot
+   if size(elem4,1) > 0
+      el = elem4[:,[1,2,3]]-1
+      triplot(coord[:,1], coord[:,2], el, color=(0.0,0.25,0.15),linewidth=0.2)
+      tricontour(coord[:,1], coord[:,2], el, u, linewidth=2)
+      el = elem4[:,[1,3,4]]-1
+      triplot(coord[:,1], coord[:,2], el, color=(0.0,0.25,0.15),linewidth=0.2)
+      tricontour(coord[:,1], coord[:,2], el, u, linewidth=2)
+   end
+   show()
 end
 
 function fem_50()
@@ -61,9 +77,7 @@ function fem_50()
    FreeNodes = setdiff( 1:n, BoundNodes )
    u[FreeNodes] = A[FreeNodes,FreeNodes] \ b[FreeNodes]
 
-   triplot(coord[:,1], coord[:,2], elem3-1, color=(0.0,0.25,0.15),linewidth=0.2)
-   tricontour(coord[:,1], coord[:,2], elem3-1, u, linewidth=2)
-   show()
+   plotsol(coord, elem3, elem4, u)
 end
 
 export fem_50
