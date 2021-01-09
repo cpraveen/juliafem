@@ -12,6 +12,12 @@ https://github.com/cpraveen/fem50
 Add plotting solution for quadrilaterals. The matlab code uses trisurf which can plot triangles and quadrilaterals. There is no equivalent function I could find in PyPlot. I use contour plots in the Julia code through the tricontour function from PyPlot. If you run the example in "sample", it plots quadrilaterals by triangulating them.
 
 ## How to run example in "square"
+You need to install the PyPlot package to plot results.
+```
+import Pkg
+Pkg.add("PyPlot")
+```
+First, generate the mesh
 ```
 bash> cd square
 ```

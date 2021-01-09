@@ -2,8 +2,12 @@ module fem
 
 using Data
 using PyPlot
+using DelimitedFiles
+using SparseArrays
+using LinearAlgebra
 
 function stima3(vertices)
+   eye(m::Int) = Matrix{Float64}(I,m,m)
    d = size(vertices,2)
    G = [ ones(1,d+1); vertices' ] \ [ zeros(1,d); eye(d) ]
    return det([ones(1,d+1); vertices']) * G * G' / prod(1:d)
@@ -22,8 +26,8 @@ function stima4(vertices)
 end
 
 function plotsol(coord, elem3, elem4, u, ncont)
-   triplot(coord[:,1], coord[:,2], elem3-1, color=(0.0,0.25,0.15),linewidth=0.2)
-   tricontour(coord[:,1], coord[:,2], elem3-1, u, ncont, linewidth=2)
+   triplot(coord[:,1],coord[:,2],elem3.-1,color=(0.0,0.25,0.15),linewidth=0.2)
+   tricontour(coord[:,1],coord[:,2],elem3.-1,u,ncont,linewidth=2)
 
    # For quads, we triangulate and plot
    if size(elem4,1) > 0
@@ -39,10 +43,10 @@ end
 
 function fem_50(ncont=10)
    coord = readdlm("coordinates.dat")
-   elem3 = isfile("elements3.dat") ? round(Int64,readdlm("elements3.dat")) : []
-   elem4 = isfile("elements4.dat") ? round(Int64,readdlm("elements4.dat")) : []
-   neumann = isfile("neumann.dat") ? round(Int64,readdlm("neumann.dat")) : []
-   dirichlet = round(Int64,readdlm("dirichlet.dat"))
+   elem3 = isfile("elements3.dat") ? round.(Int64,readdlm("elements3.dat")) : []
+   elem4 = isfile("elements4.dat") ? round.(Int64,readdlm("elements4.dat")) : []
+   neumann = isfile("neumann.dat") ? round.(Int64,readdlm("neumann.dat")) : []
+   dirichlet = round.(Int64,readdlm("dirichlet.dat"))
    n, nt, nq = size(coord,1), size(elem3,1), size(elem4,1)
    println("Number of vertices, triangles, quads = $n, $nt, $nq")
 
@@ -52,20 +56,20 @@ function fem_50(ncont=10)
    for j in 1:nt
       v = vec(elem3[j,:])
       A[v,v] += stima3(coord[v,:])
-      b[v] += det([[1,1,1]'; coord[v,:]']) * f(sum(coord[v,:],1)/3)/6
+      b[v] .+= det([[1,1,1]'; coord[v,:]']) * f(sum(coord[v,:],dims=1)/3)/6
    end
 
    for j in 1:nq
       v = vec(elem4[j,:])
       A[v,v] += stima4(coord[v,:])
-      b[v] += det([[1,1,1]'; coord[v[1:3],:]']) * f(sum(coord[v,:],1)/4)/4
+      b[v] += det([[1,1,1]'; coord[v[1:3],:]']) * f(sum(coord[v,:],dims=1)/4)/4
    end
 
    if ~isempty(neumann)
       nn = size(neumann,1)
       for j in 1:nn
          v = vec(neumann[j,:])
-         b[v] += norm(coord[v[1],:]-coord[v[2],:]) * g(sum(coord[v,:],1)/2)/2
+         b[v] += norm(coord[v[1],:]-coord[v[2],:]) * g(sum(coord[v,:],dims=1)/2)/2
       end
    end
 
