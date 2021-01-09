@@ -7,8 +7,8 @@ xmin=0.0; xmax=1.0;
 ymin=0.0; ymax=1.0;
 nx=n;
 ny=n;
-x=linspace(xmin,xmax,nx);
-y=linspace(ymin,ymax,ny);
+x=LinRange(xmin,xmax,nx);
+y=LinRange(ymin,ymax,ny);
 c=1;
 X=zeros(nx*ny,1);
 Y=zeros(nx*ny,1);
@@ -16,7 +16,7 @@ for j in 1:nx
    for k in 1:ny
       X[c] = x[j];
       Y[c] = y[k];
-      c    = c + 1;
+      global c = c + 1;
    end
 end
 
