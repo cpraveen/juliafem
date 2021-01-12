@@ -6,8 +6,9 @@ using DelimitedFiles
 using SparseArrays
 using LinearAlgebra
 
+eye(m::Int) = Matrix{Float64}(I,m,m) # m x m identity matrix
+
 function stima3(vertices)
-   eye(m::Int) = Matrix{Float64}(I,m,m)
    d = size(vertices,2)
    G = [ ones(1,d+1); vertices' ] \ [ zeros(1,d); eye(d) ]
    return det([ones(1,d+1); vertices']) * G * G' / prod(1:d)
@@ -38,6 +39,7 @@ function plotsol(coord, elem3, elem4, u, ncont)
       triplot(coord[:,1], coord[:,2], el, color=(0.0,0.25,0.15),linewidth=0.2)
       tricontour(coord[:,1], coord[:,2], el, u, ncont, linewidth=2)
    end
+   axis(:equal)
    show()
 end
 
